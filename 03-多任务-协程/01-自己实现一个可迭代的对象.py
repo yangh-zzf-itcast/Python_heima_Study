@@ -1,0 +1,46 @@
+import time
+from collections import Iterable  # 导入可迭代类
+from collections import Iterator  # 导入迭代器类
+
+
+# 定义一个新式类
+class Classmate(object):
+    def __init__(self):
+        self.names = list()
+
+    def add(self, name):
+        self.names.append(name)
+
+    # 定义一个__iter__方法，并返回一个带__iter__和__next__方法的迭代器对象的引用
+    # 让这个类成为可以迭代的类
+    # 可以使用for
+    def __iter__(self):
+        return ClassIterator()
+
+# 迭代器
+class ClassIterator(object):
+    def __iter__(self):
+        pass
+
+
+    def __next__(self):
+        return 11
+
+classmate = Classmate()
+
+classmate.add("老王")
+classmate.add("老张")
+classmate.add("老杨")
+
+print("判断classmate是否是可以迭代的对象：", isinstance(classmate, Iterable))
+
+# 调用iter函数，返回一个迭代器对象
+classmate_iterator = iter(classmate)
+print("判断classmate_iterator是否是迭代器：", isinstance(classmate_iterator, Iterator))
+# 调用迭代器的next函数 取返回值
+print(next(classmate_iterator))
+
+# 普通类 不是 可迭代类，执行会报错
+for name in classmate:
+    print(name)
+    time.sleep(1)
