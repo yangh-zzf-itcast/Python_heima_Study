@@ -1,0 +1,5 @@
+2019-04-10 20:33:14,951-log2.py[line:14] - DEBUG:这是 logging debug message
+2019-04-10 20:33:14,951-log2.py[line:15] - INFO:这是 logging info message
+2019-04-10 20:33:14,951-log2.py[line:16] - WARNING:这是 logging warning message
+2019-04-10 20:33:14,951-log2.py[line:17] - ERROR:这是 logging error message
+2019-04-10 20:33:14,951-log2.py[line:18] - CRITICAL:这是 logging critical message
