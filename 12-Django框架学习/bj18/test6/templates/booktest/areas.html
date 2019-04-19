@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>省市县选择案例</title>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.min.js"></script>
+	<script>
+		$(function(){
+			// 发起一个ajax请求 /proc，获取所有升级地区的信息
+			// 获取信息，查询数据库，使用get
+			// 涉及到信息修改，修改数据库，使用post
+			$.get('/prov', function(data){
+				// prov是对应处理的视图函数，function()是success对应的回调函数
+				// 获取返回的Json数据
+				res = data.data
+
+				// 获取prov下拉列表框
+				prov = $('#prov')
+                /*
+				// 遍历res数据，获取每一个省份元素的信息[id, atitle]
+				for (i=0; i<res.length; i++){
+					id = res[i][0]
+					atitle = res[i][1]
+
+					option_str = '<option value="' + id + '">' + atitle + '</option>'
+					// 向prov下拉列表框中追加
+					prov.append(option_str)
+					
+				}*/
+				// 循环的第二种方式
+				$.each(res, function(index, item){
+					// console.log(index)
+					// console.log(item)
+					id = item[0]
+					atitle = item[1]
+					option_str = '<option value="' + id + '">' + atitle + '</option>'
+					prov.append(option_str)
+				})
+			})
+
+			// 绑定prov下拉列表框的change事件，获取省下面的市的信息
+			$('#prov').change(function(){				
+				// 发起一个ajax请求 /city ，获取省下面的市级地区的信息
+				// 获取点击的省 的id
+				prov_id = $(this).val()
+				$.get('/city'+prov_id, function(data){
+					// 获取/city 返回的Json数据
+					res = data.data
+					// 获取city下拉列表框
+					city = $('#city')
+					dis = $('#dis')
+					// 清空市和区县的下拉框,以免两次结果追加
+					city.empty().append('<option>请选择市</option>')
+					dis.empty().append('<option>请选择区县</option>')
+					
+					// 遍历取值，添加到city的下拉列表框中
+					$.each(res, function(index, item){
+					// console.log(index)
+					// console.log(item)
+					id = item[0]
+					atitle = item[1]
+					option_str = '<option value="' + id + '">' + atitle + '</option>'
+					city.append(option_str)	
+					})
+				})
+			})
+
+			// 绑定city下拉列表框的change事件，获取市下面的区县的信息
+			$('#city').change(function(){				
+				// 发起一个ajax请求 /dis ，获取市下面的区县级地区的信息
+				// 获取点击的市 的id
+				city_id = $(this).val()
+				$.get('/dis'+city_id, function(data){
+					// 获取/dis 返回的Json数据
+					res = data.data
+					// 获取dis下拉列表框
+					dis = $('#dis')
+
+					// 清空县区的下拉框,以免两次结果追加
+					dis.empty().append('<option>请选择区县</option>')
+
+					// 遍历取值，添加到city的下拉列表框中
+					$.each(res, function(index, item){
+					// console.log(index)
+					// console.log(item)
+					id = item[0]
+					atitle = item[1]
+					option_str = '<option value="' + id + '">' + atitle + '</option>'
+					dis.append(option_str)	
+					})
+				})
+			})
+
+
+		})
+	</script>
+</head>
+<body>
+<select id="prov">
+	<option>----请选择省----</option>	
+</select>
+<select id="city">
+	<option>----请选择市----</option>	
+</select>
+<select id="dis">
+	<option>----请选择县----</option>	
+</select>
+</body>
+</html>
+

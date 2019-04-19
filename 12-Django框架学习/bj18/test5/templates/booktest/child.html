@@ -1,0 +1,18 @@
+<!-- 继承父模板的内容 -->
+{% extends 'booktest/base.html' %}
+
+{% block title %}
+	子模板文件
+{% endblock title%}
+
+{% block b1 %}
+	<!-- 会对父模板b1块中的内容进行重写 -->
+	<!-- 获取父模板中的默认内容 -->
+	{{ block.super }}
+	<h1>这是子模板b1的内容</h1>
+{% endblock b1 %}
+
+{% block a1 %}
+	{{ block.super }}
+	<h1>这是子模板a1的内容</h1>
+{% endblock a1 %}

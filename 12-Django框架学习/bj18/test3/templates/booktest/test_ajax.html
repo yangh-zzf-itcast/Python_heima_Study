@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax</title>
+	<!-- jquery文件未下载 -->
+	<script src="/static/js/jquery-1.12.4.min.js"></script>
+	<script>
+	$(function(){
+		// 绑定btnAjax 的click时间
+		$('#btnAjax').click(function(){
+			$.ajax({
+				'url': '/ajax_handle',
+				'type': 'get',
+				'dataType': 'json',
+				//ajax请求默认是异步的，设置async参数可以设置为同步执行
+				'async': false,  
+			}).success(function(data){
+				// 进行ajax请求回调函数处理
+				// alert(data.res)  // 弹出消息
+				if(data.res == 1){
+					$('#message').show().html('提示信息')
+				}
+			})
+		})
+	})
+	</script>
+</head>
+<body>
+<input type="button" id="btnAjax" value="ajax请求">
+</body>
+</html>
+

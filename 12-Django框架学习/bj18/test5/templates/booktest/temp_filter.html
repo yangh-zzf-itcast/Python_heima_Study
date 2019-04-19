@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load filters %}
+<head>
+	<meta charset="UTF-8">
+	<title>模板标签</title>
+	<style>
+		.red{
+			background-color:red;
+		}
+		.yellow{
+			background-color:yellow;
+		}
+		.green{
+			background-color:green;
+		}
+	</style>
+</head>
+<body>
+<ul>
+	{% for book in books %}
+		<!-- if book.id <= 2 -->
+		<!-- if book.id|mod -->
+		{% if book.id|mod_val:3 %}
+			<!-- 在变量后面 | 表示过滤器，对变量进行修改 -->
+			<li class="red">{{ book.id }}---{{ book.btitle }}---{{ book.bpub_date|date:'Y年-m月-d日' }}</li>
+		{% else %}
+		<li class="green">{{ book.id }}---{{ book.btitle }}---{{ book.bpub_date }}</li>
+		{% endif %}
+	{% endfor %}
+</ul>
+default过滤器:<br/>
+{{ content|default:'hello' }}<br/>
+{% comment %}
+这是多行注释
+{% endcomment %}
+</body>
+</html>
+
